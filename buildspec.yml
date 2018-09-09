@@ -1,0 +1,18 @@
+version: 0.2
+
+env:
+phases:
+  install:
+    commands:
+      sudo apt-get install git -y
+  pre_build:
+    commands:
+      - echo "Build initiated."
+  build:
+    commands:
+      - echo "Cloning Github repo and copy all templates to S3"
+      - git clone $SOURCE_REPO
+      - aws s3 cp . "s3://$TEMPLATE_BUCKET/$TEMPLATE_PREFIX" --recursive
+artifacts:
+  files:
+    - '**/*''
